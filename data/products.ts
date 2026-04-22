@@ -1,4 +1,5 @@
 export const products = [
+  { id: 1, name: "Test2", target: 2 },
   { id: 1, name: "Test", target: 2 },
   { id: 1, name: "Tomates", target: 10 },
   { id: 2, name: "Salade", target: 8 },

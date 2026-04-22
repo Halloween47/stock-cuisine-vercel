@@ -38,7 +38,7 @@ export default function Home() {
 
       <div className="bg-white rounded-2xl border border-neutral-200 p-4 mb-6">
         <div className="grid grid-cols-4 text-sm text-neutral-500 mb-3">
-          <span>Aliment</span>
+          <span>Aliments</span>
           <span>Attendu</span>
           <span>Stock</span>
           <span>À faire</span>
