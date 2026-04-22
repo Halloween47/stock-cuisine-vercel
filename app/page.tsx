@@ -29,6 +29,13 @@ export default function Home() {
   });
 
   const itemsToPrepare = itemsWithStock.filter((item) => item.missing > 0);
+  const groupedToPrepare = itemsToPrepare.reduce((acc, item) => {
+  if (!acc[item.category]) {
+    acc[item.category] = [];
+  }
+  acc[item.category].push(item);
+  return acc;
+}, {} as Record<string, typeof itemsToPrepare>);
 
   const groupedProducts = itemsWithStock.reduce((acc, product) => {
     if (!acc[product.category]) {
@@ -93,30 +100,34 @@ export default function Home() {
         </div>
 
         <section className="bg-white rounded-2xl border border-neutral-200 p-4 mt-6">
-          <h2 className="text-lg font-semibold mb-4">Liste à préparer 🔥</h2>
+  <h2 className="text-lg font-semibold mb-4">Liste à préparer 🔥</h2>
 
-          {itemsToPrepare.length === 0 ? (
-            <p className="text-emerald-600 font-medium">Rien à préparer 👍</p>
-          ) : (
-            <ul className="space-y-2">
-              {itemsToPrepare.map((item) => (
-                <li
-                  key={item.id}
-                  className="flex justify-between text-sm border-b border-neutral-100 pb-2"
-                >
-                  <div>
-                    <p className="font-medium">{item.name}</p>
-                    <p className="text-neutral-500 text-xs">{item.category}</p>
-                  </div>
+  {itemsToPrepare.length === 0 ? (
+    <p className="text-emerald-600 font-medium">Rien à préparer 👍</p>
+  ) : (
+    <div className="space-y-4">
+      {Object.entries(groupedToPrepare).map(([category, items]) => (
+        <div key={category}>
+          <h3 className="font-semibold text-neutral-700 mb-2">
+            {category}
+          </h3>
 
-                  <span className="font-semibold text-neutral-800">
-                    {item.missing}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+          <ul className="space-y-1">
+            {items.map((item) => (
+              <li
+                key={item.id}
+                className="flex justify-between text-sm border-b border-neutral-100 pb-1"
+              >
+                <span>{item.name}</span>
+                <span className="font-semibold">{item.missing}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  )}
+</section>
       </div>
     </main>
   );
